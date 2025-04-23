@@ -1,28 +1,35 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TODOLIST.MainPage">
 
-    <ScrollView>
-        <VerticalStackLayout>
-            <Entry x:Name="AddListItem" Placeholder="Item..."/>
-            
-            <Button Text="Add+" Clicked="OnButtonClicked" />
-            
-            <Label Text=OnButtonClicked.Text/>
-            
-            <CollectionView ItemsSource="{Binding TodoList}">
-                <CollectionView.ItemsLayout>
-                    <GridItemsLayout Span="2" Orientation="Vertical" />
-                </CollectionView.ItemsLayout>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <HorizontalStackLayout>
-                            <Label Text="{Binding Item}" />
-                        </HorizontalStackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </VerticalStackLayout>
-    </ScrollView>
+    <VerticalStackLayout Padding="20" Spacing="10">
+
+        <Entry x:Name="AddListItem" Placeholder="Skriv något att göra..." />
+
+        <Button Text="Lägg till" Clicked="OnButtonClicked" />
+
+        <!-- checklist -->
+        <CollectionView ItemsSource="{Binding TodoList}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+
+                        <!-- checkbox -->
+                        <CheckBox IsChecked="{Binding IsDone}" />
+
+                        <!-- redigerbar entry -->
+                        <Entry Text="{Binding Text}" WidthRequest="200" />
+
+                        <!-- ta bort -->
+                        <Button Text="❌" 
+                                Clicked="OnRemoveClicked"
+                                BackgroundColor="Transparent"
+                                TextColor="Red" 
+                                FontAttributes="Bold" />
+                    </HorizontalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </VerticalStackLayout>
 </ContentPage>
