@@ -8,26 +8,33 @@
 
         <Button Text="Lägg till" Clicked="OnButtonClicked" />
 
+        <Button />
+
         <!-- checklist -->
         <CollectionView ItemsSource="{Binding TodoList}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems Mode="Execute">
+                                <SwipeItem Text="Ta bort"
+                           BackgroundColor="Red"
+                           Invoked="OnDeleteSwipe"/>
+                            </SwipeItems>
+                        </SwipeView.RightItems>
 
-                        <!-- checkbox -->
-                        <CheckBox IsChecked="{Binding IsDone}" />
+                        <Grid Padding="10">
+                            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                                <!-- checkbox -->
+                                <CheckBox IsChecked="{Binding IsDone}" />
 
-                        <!-- redigerbar entry -->
-                        <Entry Text="{Binding Text}" WidthRequest="200" />
-
-                        <!-- ta bort -->
-                        <Button Text="❌" 
-                                Clicked="OnRemoveClicked"
-                                BackgroundColor="Transparent"
-                                TextColor="Red" 
-                                FontAttributes="Bold" />
-                    </HorizontalStackLayout>
+                                <!-- redigerbar entry -->
+                                <Entry Text="{Binding Text}" WidthRequest="200" />
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </SwipeView>
                 </DataTemplate>
+
             </CollectionView.ItemTemplate>
         </CollectionView>
 

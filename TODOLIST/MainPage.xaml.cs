@@ -10,7 +10,7 @@ namespace TODOLIST
 
     public partial class MainPage : ContentPage
     {
-        public ObservableCollection<TodoItem> TodoList { get; set; }
+        public ObservableCollection<TodoItem> TodoList { get; set; } // uppdaterar
 
         public MainPage()
         {
@@ -26,20 +26,20 @@ namespace TODOLIST
             if (!string.IsNullOrWhiteSpace(AddListItem.Text))
             {
                 TodoList.Add(new TodoItem { Text = AddListItem.Text, IsDone = false });
-                AddListItem.Text = string.Empty;
+                AddListItem.Text = "";
             }
         }
 
-        private void OnRemoveClicked(object sender, EventArgs e)
+        private void OnDeleteSwipe(object sender, EventArgs e)
         {
-            var button = sender as Button;
+            var swipeItem = sender as SwipeItem;
+            var item = swipeItem?.BindingContext as TodoItem;
 
-            var itemToRemove = button?.BindingContext as TodoItem;
-
-            if (itemToRemove != null && TodoList.Contains(itemToRemove))
+            if (item != null && TodoList.Contains(item))
             {
-                TodoList.Remove(itemToRemove);
+                TodoList.Remove(item);
             }
         }
+
     }
 }
