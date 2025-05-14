@@ -4,13 +4,19 @@
 
     <VerticalStackLayout Padding="20" Spacing="10">
 
-        <Entry x:Name="AddListItem" Placeholder="Skriv något att göra..." />
+        <HorizontalStackLayout>
+            <Entry x:Name="AddListItem" Placeholder="Skriv något att göra..." WidthRequest="450"/>
 
-        <Button Text="Lägg till" Clicked="OnButtonClicked" />
+            <Picker x:Name="VäljÅr" Title="yyyy" Margin="0,0,2,0" />
 
-        <Button />
+            <Picker x:Name="VäljMånad" Title="mm" Margin="0,0,2,0"/>
 
-        <!-- checklist -->
+            <Picker x:Name="VäljDag" Title="dd" Margin="0,0,2,0"/>
+            
+        </HorizontalStackLayout>
+
+        <Button Text="Lägg till" Clicked="OnButtonClicked" WidthRequest="250"  />
+        
         <CollectionView ItemsSource="{Binding TodoList}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
@@ -28,8 +34,25 @@
                                 <!-- checkbox -->
                                 <CheckBox IsChecked="{Binding IsDone}" />
 
-                                <!-- redigerbar entry -->
-                                <Entry Text="{Binding Text}" WidthRequest="200" />
+                                <VerticalStackLayout Spacing="0">
+                                    <Label 
+                                    Text="{Binding Text}" 
+                                    FontAttributes="Bold" 
+                                    FontSize="16"
+                                    TextColor="White" />
+
+                                    <Button 
+                                    Text="{Binding DescriptionButtonText}" 
+                                    Clicked="OnDescriptionClicked"
+                                    BindingContext="{Binding .}"
+                                    BackgroundColor="Transparent"
+                                    TextColor="LightGray"
+                                    FontSize="14"
+                                    Padding="0"/>
+
+
+                                </VerticalStackLayout>
+
                             </HorizontalStackLayout>
                         </Grid>
                     </SwipeView>
