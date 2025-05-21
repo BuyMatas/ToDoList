@@ -1,65 +1,52 @@
 ﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TODOLIST.MainPage">
+             x:Class="TODOLIST.MainPage"
+             BackgroundColor="#1e1e1e">
 
-    <VerticalStackLayout Padding="20" Spacing="10">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
 
-        <HorizontalStackLayout>
-            <Entry x:Name="AddListItem" Placeholder="Skriv något att göra..." WidthRequest="450"/>
+            <!-- Inmatningsfält -->
+            <VerticalStackLayout Spacing="10">
+                <Entry x:Name="AddListItem" Placeholder="Skriv något att göra..." BackgroundColor="#2e2e2e" TextColor="White" PlaceholderColor="Gray"/>
 
-            <Picker x:Name="VäljÅr" Title="yyyy" Margin="0,0,2,0" />
+                <HorizontalStackLayout Spacing="5">
+                    <Picker x:Name="VäljÅr" Title="År" WidthRequest="100" BackgroundColor="#2e2e2e" TextColor="White"/>
+                    <Picker x:Name="VäljMånad" Title="Månad" WidthRequest="100" BackgroundColor="#2e2e2e" TextColor="White"/>
+                    <Picker x:Name="VäljDag" Title="Dag" WidthRequest="100" BackgroundColor="#2e2e2e" TextColor="White"/>
+                </HorizontalStackLayout>
 
-            <Picker x:Name="VäljMånad" Title="mm" Margin="0,0,2,0"/>
+                <Button Text="Lägg till" Clicked="OnButtonClicked" BackgroundColor="#007ACC" TextColor="White"/>
+            </VerticalStackLayout>
 
-            <Picker x:Name="VäljDag" Title="dd" Margin="0,0,2,0"/>
-            
-        </HorizontalStackLayout>
+            <!-- Lista -->
+            <CollectionView ItemsSource="{Binding TodoList}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems Mode="Execute">
+                                    <SwipeItem Text="Ta bort" BackgroundColor="Red" Invoked="OnDeleteSwipe"/>
+                                </SwipeItems>
+                            </SwipeView.RightItems>
 
-        <Button Text="Lägg till" Clicked="OnButtonClicked" WidthRequest="250"  />
-        
-        <CollectionView ItemsSource="{Binding TodoList}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <SwipeView>
-                        <SwipeView.RightItems>
-                            <SwipeItems Mode="Execute">
-                                <SwipeItem Text="Ta bort"
-                           BackgroundColor="Red"
-                           Invoked="OnDeleteSwipe"/>
-                            </SwipeItems>
-                        </SwipeView.RightItems>
+                            <Grid Padding="10" BackgroundColor="#2e2e2e" Margin="0,5">
+                                <HorizontalStackLayout Spacing="10">
+                                    <CheckBox IsChecked="{Binding IsDone}" />
+                                    <VerticalStackLayout Spacing="2">
+                                        <Label Text="{Binding Text}" FontAttributes="Bold" TextColor="White" FontSize="14"/>
+                                        <Label Text="{Binding DeadlineText}" FontSize="11" TextColor="Gray"/>
+                                        <Button Text="{Binding DescriptionButtonText}" Clicked="OnDescriptionClicked"
+                                         BackgroundColor="Transparent" TextColor="LightGray" FontSize="11" Padding="0,2"/>
+                                    </VerticalStackLayout>
 
-                        <Grid Padding="10">
-                            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-                                <!-- checkbox -->
-                                <CheckBox IsChecked="{Binding IsDone}" />
+                                </HorizontalStackLayout>
+                            </Grid>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
-                                <VerticalStackLayout Spacing="0">
-                                    <Label 
-                                    Text="{Binding Text}" 
-                                    FontAttributes="Bold" 
-                                    FontSize="16"
-                                    TextColor="White" />
-
-                                    <Button 
-                                    Text="{Binding DescriptionButtonText}" 
-                                    Clicked="OnDescriptionClicked"
-                                    BindingContext="{Binding .}"
-                                    BackgroundColor="Transparent"
-                                    TextColor="LightGray"
-                                    FontSize="14"
-                                    Padding="0"/>
-
-
-                                </VerticalStackLayout>
-
-                            </HorizontalStackLayout>
-                        </Grid>
-                    </SwipeView>
-                </DataTemplate>
-
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-
-    </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
